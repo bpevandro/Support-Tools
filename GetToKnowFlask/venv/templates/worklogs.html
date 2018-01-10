@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <div class="text-center">
+        <h1>Jira Core Support tools</h1>
+        <p class="lead">This page allows you to extract the log works per users from a given issue.</p>
+    </div>
+
+    <div id="form-div">
+        <form action="/worklogs" method="post">
+            <div class="form-group">
+                <label for="instanceInput">Instance</label>
+                <input type="text" class="form-control" id="instanceInput" placeholder="Instance URL without 'https://'" name="iname" required>
+            </div>
+             <div class="form-group">
+                <label for="issueInput">Issue</label>
+                <input type="text" class="form-control" id="issueInput" placeholder="Issue key" name="issue" required>
+            </div>
+             <div class="form-group">
+                <label for="workHoursInput">Work hours per day</label>
+                <input type="text" class="form-control" id="workHoursInput" placeholder="This is configured at '<instance>/secure/admin/TimeTrackingAdmin.jspa" name="work_hours" required>
+            </div>
+             <div class="form-group">
+                <label for="emailInput">Email address</label>
+                <input type="email" class="form-control" id="emailInput" placeholder="Email address" name="email" required>
+            </div>
+             <div class="form-group">
+                <label for="passInput">Password</label>
+                <input type="password" class="form-control" id="passInput" placeholder="Password" name="pass" required>
+            </div>
+
+            <button type="submit" class="btn btn-default">Submit</button>
+
+        </form>
+    </div>
+
+    <br/>
+
+{% endblock %}

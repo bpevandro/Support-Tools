@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <div class="text-center">
+        <h1>Jira Core Support tools</h1>
+        <p class="lead">Here you can import users from a CSV file into a given Atlassian Cloud instance.</p>
+    </div>
+
+    <div id="form-div">
+        <form action="/import-users" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="instanceInput">Instance</label>
+                <input type="text" class="form-control" id="instanceInput" placeholder="Instance URL without https://" name="iname" required>
+            </div>
+             <div class="form-group">
+                <label for="emailInput">Email address</label>
+                <input type="email" class="form-control" id="emailInput" placeholder="Email address" name="email" required>
+            </div>
+             <div class="form-group">
+                <label for="passInput">Password</label>
+                <input type="password" class="form-control" id="passInput" placeholder="Password" name="pass" required>
+            </div>
+
+            <div class="form-group">
+                <label for="fileUpload">Upload CSV</label>
+                <input type="file" id="fileUpload" placeholder="Upload the CSV file" name="csvfile">
+            </div>
+
+            <button type="submit" class="btn btn-default">Submit</button>
+
+        </form>
+
+    </div>
+
+    <br/>
+
+{% endblock %}
