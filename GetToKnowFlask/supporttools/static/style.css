@@ -25,3 +25,21 @@ div#loading {
     margin-right: 20%;
     margin-top: 10%;
 }
+
+th {
+    background: #808080;
+
+}
+
+th, td {
+    padding: 10px;
+
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black;
+}

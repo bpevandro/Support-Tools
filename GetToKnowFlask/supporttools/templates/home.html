@@ -7,5 +7,51 @@
         <i>written by Evandro Baginski - 2018</i>
     </div>
     <br/>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio explicabo fuga fugit in ipsa molestiae odio, omnis perferendis quas, quis, repellat sit voluptatibus! Ab accusantium aliquid, at earum eos iste, minus nobis, provident quaerat sint soluta voluptas! Ad architecto at consequatur cum cumque deserunt distinctio dolore ducimus eum ex facere harum illum in inventore ipsam ipsum itaque iusto laudantium libero nisi obcaecati pariatur praesentium qui quia quo repellendus, repudiandae, soluta vel voluptate voluptatibus? Doloribus ex possimus saepe! Aut incidunt provident repellat tempora veniam! Aliquid amet animi atque doloribus, maiores nisi perferendis veniam. A ad, animi architecto aspernatur assumenda, aut culpa cum dolores dolorum eum ex facere id in iusto magni perferendis praesentium provident quae quasi quia quibusdam recusandae sapiente sit tenetur voluptatem. Animi doloribus eveniet illum maiores nemo, reiciendis sint velit! Ab accusamus architecto asperiores aspernatur atque autem corporis debitis dolor dolorem ducimus ea earum eos esse exercitationem explicabo illo in ipsa iste labore magni maiores minus molestias mollitia neque odio porro quae quod recusandae, sapiente suscipit tempore velit voluptatibus voluptatum. Deserunt dolorem error magni quia reprehenderit. Adipisci blanditiis, deleniti distinctio dolore dolorum ea hic natus non possimus totam, voluptatem voluptatibus! Aliquid animi assumenda aut beatae debitis, deserunt dignissimos distinctio eaque eligendi esse explicabo facilis id illo in ipsa iure laudantium maiores minima molestias nulla numquam officia omnis pariatur quam qui quis, quisquam reiciendis similique vel voluptatum! Accusamus blanditiis cum deleniti doloribus earum ex exercitationem expedita ipsa iure labore nam nisi non, odio odit reiciendis sunt voluptas voluptate, voluptatem voluptatibus.</p>
+    <p>This app was built to put together the scripts support has made to help with some daily tasks, such as the import of users and groups via REST and also a script to pull worklogs at user level from a given Jira issue. It works based on the current Jira's API setup which, as all of us know, may change in the future, causing the app to break. Please, see below some of the requirements for the app to run properly, such as endpoints and CSV format. <br/><br/>All uploaded files are deleted from the server once they're no longer used by the scripts.</p>
+
+    <h3>Worklogs</h3>
+    Worklogs are extracted from the full representation of the issue as JSON.<br/>
+    <b>Endpoint:</b> /rest/api/2/issue/&ltissue-key&gt
+    <br/><br/>
+
+    <h3>User import</h3>
+    Users will be imported via REST. The script reads the CSV file provided and makes API calls to Jira to create them accordingly.<br/>
+    <b>Endpoint:</b> /rest/api/2/user <br/><br/>
+    The CSV file provided <b>must</b> respect the following format, <b>including</b> the header:<br/><br/>
+     <table>
+        <tr>
+            <th>Username</th>
+            <th>First name </th>
+            <th>Last name </th>
+            <th>Email address</th>
+        </tr>
+        <tr>
+            <td>foobar</td>
+            <td>Foo</td>
+            <td>Bar</td>
+            <td>foo@bar.com</td>
+        </tr>
+     </table>
+    <br/>
+
+    <h3>Group import</h3>
+    The scripts attempts to add the user into the given group. If the group doesn't exist, <b>it creates</b> it and then attempts to add the user into the group again.<br/>
+    <b>Endpoint:</b> /rest/api/latest/group/user?groupname=&ltusername&gt<br/><br/>
+    The CSV file provided <b>must</b> respect the following format, <b>including</b> the header:<br/><br/>
+    <table>
+        <tr>
+            <th>Username</th>
+            <th>Groupname</th>
+        </tr>
+        <tr>
+            <td>foobar</td>
+            <td>Foo-bar-group</td>
+        </tr>
+     </table>
+    <br/>
+    <br/>
+    <br/>
+
+
+
 {% endblock %}
