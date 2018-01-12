@@ -5,6 +5,14 @@
     <title>Support tools</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='style.css') }}">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script type="text/javascript">
+        function loading(){
+            $("#loading").show();
+            $("#content").hide();
+        }
+    </script>
+    {% block head %}{% endblock %}
 </head>
 <body>
     {% include 'includes/_navbar.html' %}

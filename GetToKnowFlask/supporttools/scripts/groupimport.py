@@ -1,6 +1,7 @@
-import requests, json, re, os, csv
+import requests, csv
 
 group_list = []
+unauthorized = False
 
 class Groupimport:
 
@@ -26,7 +27,8 @@ class Groupimport:
         # Make request
         data = {'name': username}
         print ('\nAttempting to add ' + '"' + username + '"' + ' into the ' + '"' + groupname + '"' + ' group..')
-        response = requests.post("https://" + instance + endpoint, headers={"content-type": "application/json"}, json=data, auth=(auth_email, auth_pass))
+        response = requests.post("https://" + instance + endpoint, headers={"content-type": "application/json"}, json=data, auth=(auth_email, auth_pass), timeout=10)
+        print(response.status_code)
 
         if response.status_code == 201:
             print(response.status_code, 'User, ''"' + username + '"'', was added into the group ' + '"' + groupname + '"' + ' successfully!')
@@ -39,12 +41,21 @@ class Groupimport:
             # Instantiating an object of Groupimport() to call the method
             c = Groupimport()
             c.createGroup(username, groupname, instance, auth_email, auth_pass)
+
+        elif response.status_code == 401:
+            global unauthorized
+            unauthorized = True
+            group_list.append(str(response.status_code) + "<br/>" + str(response.text) + "<br/>")
+            return group_list
+
         else:
             group_list.append(str(response.status_code) + "<br/>" + str(response.text) + '<br/>')
 
 
     def groupImport(self, file, instance, email, password):
         global group_list
+        global unauthorized
+
         group_list.clear()
         instance = instance
 
@@ -70,5 +81,8 @@ class Groupimport:
                 # Instantiating an object of Groupimport() to call the method
                 g = Groupimport()
                 g.makeRequest(username, groupname, instance, email, password)
+
+                if unauthorized == True:
+                    return group_list
 
         return group_list

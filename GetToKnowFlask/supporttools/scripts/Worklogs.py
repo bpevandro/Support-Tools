@@ -1,4 +1,4 @@
-import requests, json, re
+import requests, re
 from datetime import datetime, timedelta
 
 class Worklogs:
@@ -15,7 +15,7 @@ class Worklogs:
         users = {}
         ENDPOINT = '/rest/api/2/issue/'+issue
 
-        RESPONSE = requests.get("https://" + instance + ENDPOINT, headers={"content-type": "application/json"}, auth=(email, password))
+        RESPONSE = requests.get("https://" + instance + ENDPOINT, headers={"content-type": "application/json"}, auth=(email, password), timeout=10)
         print(RESPONSE.status_code)
         if RESPONSE.status_code == 200:
 

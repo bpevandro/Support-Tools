@@ -1,16 +1,27 @@
 {% extends 'layout.html' %}
 
+{% block head %}
+
+    <script type="text/javascript">
+        function loading(){
+            $("#loading").show();
+            $("#content").hide();
+        }
+    </script>
+
+{% endblock %}
+
 {% block body %}
     <div class="text-center">
-        <h1>Jira Core Support tools</h1>
-        <p class="lead">This page allows you to extract the log works per users from a given issue.</p>
+        <h1>Python FlaskApp</h1>
+        <p class="lead">This app is built on Python Flask framework.</p>
     </div>
 
     <div id="form-div">
         <form action="/worklogs" method="post">
             <div class="form-group">
                 <label for="instanceInput">Instance</label>
-                <input type="text" class="form-control" id="instanceInput" placeholder="Instance URL without 'https://'" name="iname" required>
+                <input type="text" class="form-control" id="instanceInput" placeholder="Instance URL without https://" name="iname" required>
             </div>
              <div class="form-group">
                 <label for="issueInput">Issue</label>
@@ -35,5 +46,13 @@
     </div>
 
     <br/>
+    <div id="loading"></div>
+    <div class="jumbotron text-center" id="response-div">
+        <p>{{status}}</p>
+        <p>{{error_message}}</p>
+        <p>{{timetracking}}</p>
+        <p>{{worklogs}}</p>
+    </div>
+
 
 {% endblock %}

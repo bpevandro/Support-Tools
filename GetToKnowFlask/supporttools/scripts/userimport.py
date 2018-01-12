@@ -1,10 +1,12 @@
-import requests, json, re, os, csv
+from flask import Flask, render_template
+import requests, csv
+import flask, jinja2
 
 class Userimport:
     UPLOAD_FOLDER = '..'
 
     def userImport(self, file, instance, email, password ):
-
+        p = Userimport()
         progress = 0
         endpoint = '/rest/api/2/user'
         user_list = []
@@ -35,13 +37,11 @@ class Userimport:
 
                 # Make request
                 data = {'displayName': name, 'emailAddress': email_address, 'name': username}
-                response = requests.post("https://" + instance + endpoint, headers={"content-type": "application/json"}, json=data, auth=(email, password))
+                response = requests.post("https://" + instance + endpoint, headers={"content-type": "application/json"}, json=data, auth=(email, password), timeout=10)
                 print(response.text)
 
-                if response.status_code == 201:
+                if response.status_code == 201 or response.status_code == 200:
                     user_list.append(str(response.status_code) + "<br/>" + 'User,' '"'+name+'"'',' 'was successfully created with email address'',''"'+email_address+'"'',''and username'',''"'+username+'".<br/>')
-
-
 
                 elif response.status_code == 500:
                     response = requests.get("https://" + instance + endpoint +"?username="+username, headers={"content-type": "application/json"}, auth=(email, password))
@@ -51,6 +51,10 @@ class Userimport:
 
                     else:
                         user_list.append(str(response.status_code) + "<br/>" + str(response.text) + " " + username + "<br/>")
+
+                elif response.status_code == 401:
+                    user_list.append(str(response.status_code) + "<br/>" + str(response.text) + "<br/>")
+                    return user_list
 
                 else:
                     user_list.append(str(response.status_code) + "<br/>" + str(response.text) + " " + username + "<br/>")

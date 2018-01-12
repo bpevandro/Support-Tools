@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, redirect, flash
 from flask_restful import Resource, Api
 from scripts import Worklogs, Userimport, Groupimport
 from werkzeug import secure_filename
-import json
 import os
 
 UPLOAD_FOLDER = 'uploads'
@@ -12,14 +11,6 @@ app = Flask(__name__)
 api = Api(app)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-
-class Progress:
-
-    def printCount(self, progress, numline):
-        print(progress, numline)
-
-
-        return None
 
 # This is called to check if the file is valid based on the ALLOWED_EXTENSIONS
 def allowed_file(filename):
@@ -55,9 +46,13 @@ def imports():
             # Saves file
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
+        # Instantiating object of Userimport and calling userImport method, which runs the script
         userimport = Userimport()
         user_import = userimport.userImport(os.path.join(app.config['UPLOAD_FOLDER'], filename), INSTANCE, EMAIL, PASSWORD)
 
+        # It deletes the file as it's no longer used
+        os.remove(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
+        # Render template sending the data along
         return render_template('importwithresponse.html', userimport=user_import)
 
     elif request.method == 'GET':
@@ -88,9 +83,13 @@ def import_groups():
             # Saves file
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
+        # Instantiating object of Groupimport and calling groupImport method, which runs the script
         groupimport = Groupimport()
         group_import = groupimport.groupImport(os.path.join(app.config['UPLOAD_FOLDER'], filename), INSTANCE, EMAIL, PASSWORD)
 
+        # It deletes the file as it's no longer used at this point
+        os.remove(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
+        # Render template sending the data along
         return render_template('importgroupswithresponse.html', groupimport=group_import)
 
     elif request.method == 'GET':
@@ -126,3 +125,5 @@ def worklogs():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+# FLASK_APP=restflask.py flask run --host=0.0.0.0
