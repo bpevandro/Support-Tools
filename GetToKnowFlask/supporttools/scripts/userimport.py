@@ -41,13 +41,13 @@ class Userimport:
                 print(response.text)
 
                 if response.status_code == 201 or response.status_code == 200:
-                    user_list.append(str(response.status_code) + "<br/>" + 'User,' '"'+name+'"'',' 'was successfully created with email address'',''"'+email_address+'"'',''and username'',''"'+username+'".<br/>')
+                    user_list.append(str(response.status_code) + "<br/>" + 'User, ''"'+name+'"'',' ' was successfully created with email address "'+email_address+'", and username "'+username+'".<br/>')
 
                 elif response.status_code == 500:
                     response = requests.get("https://" + instance + endpoint +"?username="+username, headers={"content-type": "application/json"}, auth=(email, password))
 
                     if response.status_code == 200 or response.status_code == 201:
-                        user_list.append(str(response.status_code) + "<br/>" + 'User,' '"' + name + '"'',' 'was successfully created with email address'',''"' + email_address + '"'',''and username'',''"' + username + '".<br/>')
+                        user_list.append(str(response.status_code) + "<br/>" + 'User, ''"' + name + '"'',' ' was successfully created with email address "' + email_address + '", and username "' + username + '".<br/>')
 
                     else:
                         user_list.append(str(response.status_code) + "<br/>" + str(response.text) + " " + username + "<br/>")
