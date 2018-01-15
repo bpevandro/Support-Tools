@@ -11,7 +11,7 @@ class Userimport:
         endpoint = '/rest/api/2/user'
         user_list = []
 
-        with open(file) as csvfile:
+        with open(file,  encoding='utf8') as csvfile:
 
             readCSV = csv.reader(csvfile, delimiter=',')
 

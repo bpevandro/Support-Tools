@@ -44,7 +44,7 @@ def imports():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             # Saves file
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
 
         # Instantiating object of Userimport and calling userImport method, which runs the script
         userimport = Userimport()
@@ -124,6 +124,6 @@ def worklogs():
             return render_template('worklogswithresponse.html', status=status_code, error_message=error)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=9999, debug=True)
 
 # FLASK_APP=restflask.py flask run --host=0.0.0.0
